@@ -15,6 +15,10 @@ export const resolvers = {
                 if(err) throw new Error(err);
                 return user;
             })
+        },
+        me: (root, args, context) => {
+            console.log('me query')
+            return context.user
         }
     },
     Mutation: {

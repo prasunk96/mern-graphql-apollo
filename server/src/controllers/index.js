@@ -7,7 +7,6 @@ export const handleLogin = (req, res, next) => {
   let data = JSON.parse(Object.keys(req.body)[0]);
   let password = data.password;
   let username = data.username;
-  console.log(jwtSecret);
   User.attemptLogin(username, password, (err, user) => {
       if(err){return next(err)}
       
@@ -20,4 +19,16 @@ export const handleLogin = (req, res, next) => {
       }
   });
 }
+
+export const verifyUser = (req, res, next) => {
+  const token = req.headers['authorization'];
+    jwt.verify(token, jwtSecret, (err, user) => {
+      if(err){console.log(err.message)}
+      req.user = user;
+    if(!user){
+      console.log("User Not Authorized");
+    }
+      next();
+    });
+};
 

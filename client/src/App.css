@@ -1,19 +1,19 @@
-#signup-wrapper {
+.form-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 40vw;
   margin: 10vh auto; }
-  #signup-wrapper .flex-column {
+  .form-wrapper .flex-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: space-between;
     width: 100%; }
-    #signup-wrapper .flex-column .label {
+    .form-wrapper .flex-column .label {
       width: 8vw; }
-    #signup-wrapper .flex-column .input {
+    .form-wrapper .flex-column .input {
       margin-bottom: 5vh;
       width: 32vw; }
 

@@ -25,6 +25,10 @@ const UserSchema = new Schema({
    password: {
        type: String
    },
+   profilePic: {
+       type: String,
+       default: ''
+   },
    createdOn: {
        type: Date,
        default: Date.now()

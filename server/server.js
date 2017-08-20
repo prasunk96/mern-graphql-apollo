@@ -6,7 +6,7 @@ import { schema } from './src/schema';
 import { execute, subscribe } from 'graphql';
 import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { handleLogin } from './src/controllers';
+import { handleLogin, verifyUser } from './src/controllers';
 
 const PORT = 8081;
 const HOST = `://${process.env.C9_HOSTNAME}`;
@@ -14,9 +14,15 @@ const server = express();
 
 server.use('*', cors({ origin: `http${HOST}:8080`, credentials: true }));
 
-server.use('/graphql', bodyParser.json(), graphqlExpress({
-  schema
-}));
+server.use(verifyUser);
+
+server.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
+  schema,
+  context: {
+    user: req.user
+  }
+}))
+);
 
 server.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',

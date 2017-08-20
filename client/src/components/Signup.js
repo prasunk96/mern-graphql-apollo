@@ -39,7 +39,7 @@ class Signup extends Component{
   
     render(){
         return(
-    <div id='signup-wrapper'>
+    <div className='form-wrapper'>
       <Header as='h1'>Signup</Header>
       <Form className='flex-column'>
         <Input type='text' 

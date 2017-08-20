@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Header, Button, Icon } from 'semantic-ui-react';
+import jwt from 'jwt-decode';
 
 export default class Login extends Component{
   constructor(){
@@ -14,12 +15,13 @@ export default class Login extends Component{
   
   auth = () => {
       let token = window.localStorage.getItem('token');
-      console.log(token)
       if(token==='undefined'){
           this.props.history.push('/login');
       }
       else{
-          this.props.history.push('/');
+          const decoded = jwt(token);
+          this.props.login();
+          this.props.history.push(`/user/${decoded.username}`);
       }
   }
   
@@ -47,7 +49,7 @@ export default class Login extends Component{
   
     render(){
         return(
-    <div id='login-wrapper'>
+    <div className='form-wrapper'>
       <Header as='h1'>Login</Header>
       <Form className='flex-column'>
         <Input type='text' 

@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://apollo-react-project-benjaminadk.c9users.io:8081/",
   "dependencies": {
+    "jwt-decode": "^2.2.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2",
     "react": "^15.6.1",

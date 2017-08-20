@@ -3,6 +3,7 @@ import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apol
 import Routes from './components/Routes';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
+import { authHeaderMiddleware } from './middleware';
 
 const networkInterface = createNetworkInterface({
   uri: 'http://apollo-react-project-benjaminadk.c9users.io:8081/graphql',
@@ -15,7 +16,10 @@ const client = new ApolloClient({
   networkInterface: networkInterface
 });
 
+networkInterface.use([authHeaderMiddleware]);
+
 class App extends Component {
+
   render() {
     return (
         <ApolloProvider client={client}>
