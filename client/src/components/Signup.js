@@ -81,11 +81,10 @@ const addUserMutation = gql`
       id
       username
       email
-      password
-      createdOn
     }
   }
 `
 
 const SignupWithMutation = graphql(addUserMutation)(Signup);
 export default SignupWithMutation;
+

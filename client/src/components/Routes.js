@@ -26,10 +26,15 @@ const LoggedInButtons = () => {
   let token = window.localStorage.getItem('token');
   let decoded = token ? jwt(token) : null;
   let profileLink = decoded ? `/user/${decoded.username}` : '/';
+  let checkUrl = window.localStorage.getItem('profilePic');
+  let picUrl = checkUrl !== 'null'||'undefined' ? checkUrl :'http://via.placeholder.com/150x150';
   return(
           <Menu.Menu position='right'>
             <Menu.Item>
-              <Image shape='rounded' width={50} src='http://via.placeholder.com/150x150' />
+              <Image shape='rounded' 
+                     width={50} 
+                     height={50}
+                     src={picUrl} />
             </Menu.Item>
             <Menu.Item>
             <Link to={profileLink}><Button>Profile</Button></Link>
@@ -54,7 +59,6 @@ class Routes extends Component{
   
   render(){
     
-    const loggedIn = this.state.userLoggedIn;
     
     return(
     <Router>
@@ -67,7 +71,7 @@ class Routes extends Component{
             </Link>
           </Menu.Item>
           
-          {loggedIn ? <LoggedOutButtons/> : <LoggedInButtons/>}
+          {this.state.userLoggedIn === false ? <LoggedOutButtons/> : <LoggedInButtons/>}
         
         </Menu>
         

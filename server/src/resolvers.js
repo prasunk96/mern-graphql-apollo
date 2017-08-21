@@ -1,6 +1,9 @@
 import { User } from './connectors';
+import { PubSub } from 'graphql-subscriptions';
 
-let nextId = 1;
+const pubsub = new PubSub();
+
+let nextId = 4;
 
 export const resolvers = {
     Query: {
@@ -17,7 +20,7 @@ export const resolvers = {
             })
         },
         me: (root, args, context) => {
-            console.log('me query')
+            console.log('me query');
             return context.user
         }
     },
@@ -25,9 +28,30 @@ export const resolvers = {
         addUser: (root, { user }) => {
             let newUser = new User({id: String(nextId++), username: user.username, email: user.email, password: user.password});
             return newUser.save((err) => {
-                if(err) throw new Error(err);
+                if(err) console.log(err.message);
+                console.log(newUser)
                 return newUser;
             })
+        },
+         addProfilePic: (root, { input }, context) => {
+                let update = { profilePic: input.profilePic };
+                let query = { id: context.user.id };
+                let options = { new: true, upsert: true};
+                return User.findOneAndUpdate(query, update, options).exec()
+                .then(user => {
+                pubsub.publish('userAddedAvatar', {userAddedAvatar: user})
+                return user 
+                })
+
+            }
+             
+    },
+    Subscription: {
+        userSignedUp: {
+            subscribe: () => pubsub.asyncIterator('userSignedUp')
+        },
+        userAddedAvatar: {
+            subscribe: () => pubsub.asyncIterator('userAddedAvatar')
         }
     }
 }

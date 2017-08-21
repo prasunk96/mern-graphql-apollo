@@ -23,7 +23,7 @@ export const handleLogin = (req, res, next) => {
 export const verifyUser = (req, res, next) => {
   const token = req.headers['authorization'];
     jwt.verify(token, jwtSecret, (err, user) => {
-      if(err){console.log(err.message)}
+      if(err)console.error(err.message);
       req.user = user;
     if(!user){
       console.log("User Not Authorized");
