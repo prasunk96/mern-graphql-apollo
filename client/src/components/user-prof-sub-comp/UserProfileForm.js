@@ -24,7 +24,7 @@ class UserProfileForm extends Component {
     let reverse;
           
     function reverseGeo(){
-      window.fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyBLlSizwtPwzALlGiLL-f5JhCLCTC8ZqUA`)
+      window.fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
         .then( res => res.json() )
         .then( data => reverse=data)
         .then( data => console.log(data))
