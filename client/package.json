@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://apollo-react-project-benjaminadk.c9users.io:8081/",
+  "proxy": "https://apollo-react-project-benjaminadk.c9users.io:8081/",
   "dependencies": {
     "jwt-decode": "^2.2.0",
     "node-sass-chokidar": "0.0.3",

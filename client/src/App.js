@@ -6,15 +6,12 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 import { authHeaderMiddleware } from './middleware';
 
-const wsClient = new SubscriptionClient(`ws://apollo-react-project-benjaminadk.c9users.io:8081/subscriptions`, {
+const wsClient = new SubscriptionClient(`wss://apollo-react-project-benjaminadk.c9users.io:8081/subscriptions`, {
   reconnect: true
 });
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://apollo-react-project-benjaminadk.c9users.io:8081/graphql',
-  opts: {
-    credentials: 'same-origin',
-  }
+  uri: 'https://apollo-react-project-benjaminadk.c9users.io:8081/graphql'
 });
 
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(

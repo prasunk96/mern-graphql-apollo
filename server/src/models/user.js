@@ -29,6 +29,22 @@ const UserSchema = new Schema({
        type: String,
        default: ''
    },
+   bio: {
+       type: String,
+       default: ''
+   },
+    lat: {
+        type: String,
+        default: ''
+    },
+    lon: {
+       type: String,
+       default: ''
+    },
+    city: {
+       type: String,
+       default: ''
+   },
    createdOn: {
        type: Date,
        default: Date.now()

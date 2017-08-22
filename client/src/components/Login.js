@@ -49,7 +49,7 @@ export default class Login extends Component{
   
     render(){
         return(
-    <div className='form-wrapper'>
+    <div className='signup-form-wrapper'>
       <Header as='h1'>Login</Header>
       <Form className='flex-column'>
         <Input type='text' 

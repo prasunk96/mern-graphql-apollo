@@ -1,21 +1,25 @@
-.form-wrapper {
+.signup-form-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 40vw;
   margin: 10vh auto; }
-  .form-wrapper .flex-column {
+  .signup-form-wrapper .flex-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: space-between;
     width: 100%; }
-    .form-wrapper .flex-column .label {
+    .signup-form-wrapper .flex-column .label {
       width: 8vw; }
-    .form-wrapper .flex-column .input {
+    .signup-form-wrapper .flex-column .input {
       margin-bottom: 5vh;
       width: 32vw; }
+
+.user-profile-wrapper {
+  display: flex;
+  flex-direction: column; }
 
 #hello {
   color: #e53b3b; }

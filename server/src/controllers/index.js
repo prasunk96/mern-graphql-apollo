@@ -12,7 +12,12 @@ export const handleLogin = (req, res, next) => {
       
       let isAuthenticated = (!!user);
       if(isAuthenticated){
-          return res.json({newToken: jwt.sign({ email: user.email, username: user.username, id: user.id}, jwtSecret, { expiresIn: '24h' })});
+          return res.json({newToken: jwt.sign({ 
+            email: user.email, 
+            username: user.username, 
+            id: user.id, 
+            profilePic: user.profilePic, 
+            createdOn: user.createdOn}, jwtSecret, { expiresIn: '24h' })});
       }
       else{
           res.json({"error": "Invalid Username or Password"});

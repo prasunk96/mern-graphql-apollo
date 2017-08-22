@@ -3,7 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 
 const pubsub = new PubSub();
 
-let nextId = 4;
+let nextId = 1;
 
 export const resolvers = {
     Query: {
@@ -21,7 +21,10 @@ export const resolvers = {
         },
         me: (root, args, context) => {
             console.log('me query');
-            return context.user
+            return User.findOne({id: context.user.id}, (err, user) => {
+                if(err) throw new Error(err);
+                return user;
+            })
         }
     },
     Mutation: {
@@ -33,13 +36,13 @@ export const resolvers = {
                 return newUser;
             })
         },
-         addProfilePic: (root, { input }, context) => {
-                let update = { profilePic: input.profilePic };
+         addUserProfile: (root, { input }, context) => {
+                let update = { profilePic: input.profilePic, bio: input.bio, lat: input.lat, lon: input.lon, city: input.city };
                 let query = { id: context.user.id };
                 let options = { new: true, upsert: true};
                 return User.findOneAndUpdate(query, update, options).exec()
                 .then(user => {
-                pubsub.publish('userAddedAvatar', {userAddedAvatar: user})
+                pubsub.publish('userAddedUserProfile', {userAddedUserProfile: user})
                 return user 
                 })
 
@@ -50,8 +53,8 @@ export const resolvers = {
         userSignedUp: {
             subscribe: () => pubsub.asyncIterator('userSignedUp')
         },
-        userAddedAvatar: {
-            subscribe: () => pubsub.asyncIterator('userAddedAvatar')
+        userAddedUserProfile: {
+            subscribe: () => pubsub.asyncIterator('userAddedUserProfile')
         }
     }
 }

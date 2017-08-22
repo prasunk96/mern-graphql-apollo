@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { Header } from 'semantic-ui-react';
-import AddUserAvatarWithMutation from './mutations/AddUserAvatar';
+import UserProfileFormWithMutation from './user-prof-sub-comp/UserProfileForm';
+import Info from './user-prof-sub-comp/Info';
+import UserProfileHeader from './user-prof-sub-comp/Header';
 
 class UserProfile extends Component{
     constructor(props){
@@ -31,15 +32,17 @@ class UserProfile extends Component{
     render(){
         const data = this.props.data;
 
-        if(data.error)return(<h1>{data.error}</h1>);
+        if(data.error)return(<h1>{data.error.message}</h1>);
         if(data.loading)return(<h1>Loading</h1>);
         if(data.me===null)return(<h1>NOT AUTHENTICATED</h1>);
         if(data.me){
             return(
-            <div>
-            <Header as='h1'>{data.me.username}</Header>
-            {data.me.id ? <h1>hello</h1> : null}
-            <AddUserAvatarWithMutation/>
+            <div className='user-profile-wrapper'>
+              
+              <UserProfileHeader/>
+              <Info data={data.me}/>
+              <UserProfileFormWithMutation data={data.me}/>
+          
             <button onClick={this.stuff}>STUFF</button>
             </div>
             );
@@ -56,18 +59,26 @@ const getUserInfo = gql`
             email
             profilePic
             createdOn
+            bio
+            lat
+            lon
+            city
         }
     }
 `;
 
 const profilePicSubscription = gql`
-    subscription userAddedAvatar {
-        userAddedAvatar{
+    subscription userAddedUserProfile {
+        userAddedUserProfile{
             id
             username
             email
             profilePic
             createdOn
+            bio
+            lat
+            lon
+            city
         }
     }
 `;

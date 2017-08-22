@@ -12,7 +12,7 @@ const PORT = 8081;
 const HOST = `://${process.env.C9_HOSTNAME}`;
 const server = express();
 
-server.use('*', cors({ origin: `http${HOST}:8080`, credentials: true }));
+server.use('*', cors({ origin: `https${HOST}` }));
 
 server.use(verifyUser);
 

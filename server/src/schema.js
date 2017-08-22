@@ -9,6 +9,10 @@ type User {
     email: String
     password: String
     profilePic: String
+    lat: String
+    lon: String
+    city: String
+    bio: String
     createdOn: String
 }
 
@@ -18,8 +22,12 @@ input UserInput {
     password: String
 }
 
-input ProfilePic {
-    profilePic: String!
+input ProfileInput {
+    profilePic: String
+    bio: String
+    lat: String
+    lon: String
+    city: String
 }
 
 type Query {
@@ -30,12 +38,12 @@ type Query {
 
 type Mutation {
     addUser(user: UserInput!): User
-    addProfilePic(input: ProfilePic!): User
+    addUserProfile(input: ProfileInput!): User
 }
 
 type Subscription {
     userSignedUp(id: String!): User
-    userAddedAvatar: User
+    userAddedUserProfile: User
 }
 
 schema {
