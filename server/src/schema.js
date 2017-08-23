@@ -2,6 +2,15 @@ import { makeExecutableSchema } from 'graphql-tools';
 import { resolvers } from './resolvers';
 
 const typeDefs = `
+type Skill {
+    name: String
+    value: Int
+}
+
+input SkillInput {
+    name: String
+    value: Int
+}
 
 type User {
     id: ID!
@@ -9,10 +18,11 @@ type User {
     email: String
     password: String
     profilePic: String
-    lat: String
-    lon: String
+    lat: Float
+    lon: Float
     city: String
     bio: String
+    skills: [Skill]
     createdOn: String
 }
 
@@ -25,9 +35,10 @@ input UserInput {
 input ProfileInput {
     profilePic: String
     bio: String
-    lat: String
-    lon: String
+    lat: Float
+    lon: Float
     city: String
+    skills: [SkillInput]
 }
 
 type Query {

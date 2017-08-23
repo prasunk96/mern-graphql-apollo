@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { PropsRoute } from './helpers';
-import { Button, Menu, Icon, Image } from 'semantic-ui-react';
+import { Button, Menu, Image } from 'semantic-ui-react';
 import Home from './Home';
 import Login from './Login';
 import Logout from './Logout';
@@ -9,6 +9,7 @@ import Signup from './Signup';
 import NoMatch from './NoMatch';
 import UserProfileWithInfo from './UserProfile';
 import jwt from 'jwt-decode';
+
 
 const LoggedOutButtons = () => (
           <Menu.Menu position='right'>
@@ -37,10 +38,10 @@ const LoggedInButtons = () => {
                      src={picUrl} />
             </Menu.Item>
             <Menu.Item>
-            <Link to={profileLink}><Button>Profile</Button></Link>
+            <Link to={profileLink}><Button color='orange'>Profile</Button></Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to='/logout'><Button>Logout</Button></Link>
+            <Link to='/logout'><Button color='orange'>Logout</Button></Link>
             </Menu.Item>
           </Menu.Menu>
   );
@@ -64,10 +65,12 @@ class Routes extends Component{
     <Router>
       <div id='App'>
         
-        <Menu>
+        <Menu fixed='top'>
           <Menu.Item>
             <Link to='/'>
-              <Icon name='chrome' size='huge'/>
+              <Image width={50} 
+                     height={50} 
+                     src='https://s3-us-west-1.amazonaws.com/learnreact/assets/react-graphql-apollo.svg' />
             </Link>
           </Menu.Item>
           

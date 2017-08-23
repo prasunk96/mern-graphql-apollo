@@ -5,3 +5,12 @@
 #hello{
   color: $error;
 }
+
+//HELPER CLASSES
+.flex-row {
+    display: flex;
+
+    justify-content: space-around;
+}
+
+

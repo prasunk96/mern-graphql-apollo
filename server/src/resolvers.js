@@ -37,7 +37,8 @@ export const resolvers = {
             })
         },
          addUserProfile: (root, { input }, context) => {
-                let update = { profilePic: input.profilePic, bio: input.bio, lat: input.lat, lon: input.lon, city: input.city };
+        
+                let update = { profilePic: input.profilePic, bio: input.bio, lat: input.lat, lon: input.lon, city: input.city, skills: input.skills };
                 let query = { id: context.user.id };
                 let options = { new: true, upsert: true};
                 return User.findOneAndUpdate(query, update, options).exec()

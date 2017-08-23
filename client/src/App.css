@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 40vw;
-  margin: 10vh auto; }
+  margin: 20vh auto; }
   .signup-form-wrapper .flex-column {
     display: flex;
     flex-direction: column;
@@ -19,7 +19,29 @@
 
 .user-profile-wrapper {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  margin-top: 15vh; }
+
+#ratings-wrapper span {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+
+#user-card {
+  width: 50vh;
+  margin-top: 5vh; }
+  #user-card img {
+    width: 50vh;
+    height: 50vh; }
+
+#user-skills-card {
+  margin-top: 5vh;
+  width: 45vw; }
 
 #hello {
   color: #e53b3b; }
+
+.flex-row {
+  display: flex;
+  justify-content: space-around; }

@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { Form, Button, Grid, Message, Label, Icon } from 'semantic-ui-react';
+import { Form, Button, Grid, Message, Label, Icon, Rating, Header } from 'semantic-ui-react';
 
 class UserProfileForm extends Component {
     constructor(props){
         super(props)
     this.state = {
-        loading: true,
+        loading: false,
         profilePic: '',
         bio: '',
         city: '',
         geo: {
           lat: '',
           lon: ''
-        }
+        },
+        rates: [
+          {name: 'React DOM' ,value: 0},
+          {name: 'React Native' ,value: 0},
+          {name: 'ES6' ,value: 0},
+          {name: 'State & Props' ,value: 0},
+          {name: 'JSX' ,value: 0},
+          {name: 'Create React App' ,value: 0},
+          {name: 'React Router 4' ,value: 0},
+          {name: 'React Apollo' ,value: 0},
+          {name: 'Helmet' ,value: 0},
+          {name: 'Component Libraries' ,value: 0},
+          {name: 'Server Side Render' ,value: 0},
+          {name: 'Webpack' ,value: 0},
+          {name: 'Higher Order Component' ,value: 0},
+          {name: 'Redux' ,value: 0},
+          {name: 'Lifecycle Methods' ,value: 0}
+        ]
      }
         this.geoInit = this.geoInit.bind(this)
     }
@@ -22,6 +39,7 @@ class UserProfileForm extends Component {
     let lat;
     let lon;
     let reverse;
+    this.setState({loading: true});
           
     function reverseGeo(){
       window.fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`)
@@ -48,13 +66,21 @@ class UserProfileForm extends Component {
 }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
-    
+     
+    handleRate(prop,e,d){
+      let rates = this.state.rates
+      let key = Object.keys(rates[prop])[1]
+      rates[prop][key] = d.rating 
+      this.setState({rates:rates})
+  }
+  
     addUserProfile = () => {
         let profilePic = this.state.profilePic
         let bio = this.state.bio
         let lat = this.state.geo.lat
         let lon = this.state.geo.lon
         let city = this.state.city
+        let rates = this.state.rates
         this.props.mutate({
             variables: {
                 input: {
@@ -62,13 +88,14 @@ class UserProfileForm extends Component {
                  bio: bio,
                  lat: lat,
                  lon: lon,
-                 city: city
+                 city: city,
+                 skills: rates
                 }
             }
         }).then(({data}) => {
             window.localStorage.setItem('profilePic',data.addUserProfile.profilePic);
         }).then( () => {
-            this.setState({profilePic: '', bio: '', lat: '', lon: '', city: ''});
+            this.setState({profilePic: '', bio: ''});
         }).catch((err) => {
             console.log(err)
         })
@@ -77,7 +104,7 @@ class UserProfileForm extends Component {
     render(){
         return(
    <Grid columns={1} centered>
-      <Grid.Column width={12}>
+      <Grid.Column width={14}>
         <div>
           <Message
             attached
@@ -89,7 +116,7 @@ class UserProfileForm extends Component {
             <Form.Input type='text'
                name='profilePic'
                label='Profile Pic'
-               placeholder='URL'
+               placeholder='URL - Square Image will look the best'
                onChange={this.handleChange}
                value={this.state.profilePic}/>
         
@@ -117,16 +144,100 @@ class UserProfileForm extends Component {
                             readOnly={this.state.geo.lon.length>0}/>
             </Form.Group>
           
-            <Button onClick={this.geoInit}>Allow Geolocation</Button>
+            <Button fluid onClick={this.geoInit} animated size='huge' color='orange'>
+              <Button.Content visible>
+                Allow Geolocation
+              </Button.Content>
+              <Button.Content hidden>
+                <Icon size='medium' name='world' />
+              </Button.Content>
+            </Button><br/>
         
-            <Button onClick={this.addUserProfile}>Submit</Button>
           
           </Form>
           <Message attached='bottom' warning>
             <Icon name='info' />
-              Click <Label color='brown'>Allow Geolocation</Label> to let us pin point your location for you.
-              This is a Google Suggested Best Practice for retrieving location information.
+              By Clicking  <Label color='brown'>Allow Geolocation</Label>  you allow this App
+              to compute your location.  Google Chrome best practices suggest letting, you, the user,
+              activate geolocation through an action.  We use this information to connect you with 
+              other people near you who are interested in React
           </Message>
+          
+          <Grid id='ratings-wrapper' columns ='equal' relaxed padded stackable container>
+             
+             <Grid.Column textAlign='center'>
+              <Header as='h2' textAlign='center'>Fundamentals</Header>
+              <span>React DOM:
+                <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[0].value} onRate={this.handleRate.bind(this,0)}/>
+              </span>
+              <br/>
+              <span>React Native:
+                <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[1].value} onRate={this.handleRate.bind(this,1)}/>
+              </span>
+              <br/>
+              <span>ES6 & Beyond:
+                <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[2].value} onRate={this.handleRate.bind(this,2)}/>
+              </span>
+              <br/>
+              <span>State & Props:
+                <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[3].value} onRate={this.handleRate.bind(this,3)}/>
+              </span>
+              <br/>
+              <span>JSX:
+                <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[4].value} onRate={this.handleRate.bind(this,4)}/>
+              </span>
+             </Grid.Column>
+             
+             <Grid.Column textAlign='center'>
+              <Header as='h2' textAlign='center'>Popular Tools</Header>
+             <span>Create React App:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[5].value} onRate={this.handleRate.bind(this,5)}/>
+             </span>
+             <br/>
+             <span>React Router 4:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[6].value} onRate={this.handleRate.bind(this,6)}/>
+             </span>
+             <br/>
+             <span>React Apollo:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[7].value} onRate={this.handleRate.bind(this,7)}/>
+             </span>
+             <br/>
+             <span>Helmet:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[8].value} onRate={this.handleRate.bind(this,8)}/>
+             </span>
+             <br/>
+             <span>Component Libraries:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[9].value} onRate={this.handleRate.bind(this,9)}/>
+             </span>
+             <br/>
+             </Grid.Column>
+             
+             <Grid.Column textAlign='center'>
+              <Header as='h2' textAlign='center'>Advanced</Header>
+              <span>Server Side Render:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[10].value} onRate={this.handleRate.bind(this,10)}/>
+             </span>
+             <br/>
+             <span>Webpack:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[11].value} onRate={this.handleRate.bind(this,11)}/>
+             </span>
+             <br/>
+             <span>Higher Order Comp:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[12].value} onRate={this.handleRate.bind(this,12)}/>
+             </span>
+             <br/>
+             <span>Redux:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[13].value} onRate={this.handleRate.bind(this,13)}/>
+             </span>
+             <br/>
+             <span>Lifecycle Methods:
+             <Rating size='massive' clearable icon='star' maxRating={5} rating={this.state.rates[14].value} onRate={this.handleRate.bind(this,14)}/>
+             </span>
+             <br/>
+             
+          </Grid.Column>
+         </Grid>
+          <Button onClick={this.addUserProfile}>Submit</Button>
         </div>
       </Grid.Column>
     </Grid>

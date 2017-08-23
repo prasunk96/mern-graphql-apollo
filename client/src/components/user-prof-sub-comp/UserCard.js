@@ -2,12 +2,12 @@ import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import { monthParse } from '../helpers';
 
-const Info = ({data}) => {
+const UserCard = ({data}) => {
   let date = new Date(data.createdOn)
   let displayDate = monthParse(date.getMonth()) + ', ' + date.getFullYear()
   
    return(
-   <Card raised centered>
+   <Card id='user-card' raised>
     <Image src={data.profilePic}/>
     <Card.Content>
       <Card.Header>{data.username}</Card.Header>
@@ -22,4 +22,4 @@ const Info = ({data}) => {
    </Card>
     );
 }
-export default Info;
+export default UserCard;

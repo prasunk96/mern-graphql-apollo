@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
+import { Button } from 'semantic-ui-react';
 import UserProfileFormWithMutation from './user-prof-sub-comp/UserProfileForm';
-import Info from './user-prof-sub-comp/Info';
+import UserCard from './user-prof-sub-comp/UserCard';
+import UserSkills from './user-prof-sub-comp/UserSkills';
 import UserProfileHeader from './user-prof-sub-comp/Header';
+import UserProfileMap from './user-prof-sub-comp/UserMap';
 
 class UserProfile extends Component{
-    constructor(props){
-        super(props)
-    }
+   
     componentWillMount(){
         this.props.data.subscribeToMore({
             document: profilePicSubscription,
@@ -26,7 +27,6 @@ class UserProfile extends Component{
     
     stuff = () => {
         console.log(this.props)
-        console.log(this.state)
     }
     
     render(){
@@ -40,10 +40,15 @@ class UserProfile extends Component{
             <div className='user-profile-wrapper'>
               
               <UserProfileHeader/>
-              <Info data={data.me}/>
+              
+              <div className='flex-row'>
+                <UserCard data={data.me}/>
+                <UserSkills data={data.me}/>
+              </div>
+              {/*<UserProfileMap data={data.me}/>*/}
               <UserProfileFormWithMutation data={data.me}/>
           
-            <button onClick={this.stuff}>STUFF</button>
+            <Button onClick={this.stuff}>CONSOLE LOG PROPS</Button>
             </div>
             );
         }
@@ -63,6 +68,10 @@ const getUserInfo = gql`
             lat
             lon
             city
+            skills{
+              name
+              value
+            }
         }
     }
 `;
@@ -79,6 +88,10 @@ const profilePicSubscription = gql`
             lat
             lon
             city
+            skills{
+              name
+              value
+            }
         }
     }
 `;

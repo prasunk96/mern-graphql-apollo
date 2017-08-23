@@ -3,6 +3,17 @@ import bcrypt from 'bcrypt';
 
 const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
+
+const SkillSchema = new Schema({
+    name: {
+        type: String,
+        lowercase: true
+    },
+    value: {
+        type: Number
+    }
+});
+
 let User;
 
 const UserSchema = new Schema({
@@ -34,17 +45,18 @@ const UserSchema = new Schema({
        default: ''
    },
     lat: {
-        type: String,
-        default: ''
+        type: Number,
+        default: 33
     },
     lon: {
-       type: String,
-       default: ''
+       type: Number,
+       default: -118
     },
     city: {
        type: String,
        default: ''
    },
+   skills: [SkillSchema],
    createdOn: {
        type: Date,
        default: Date.now()
