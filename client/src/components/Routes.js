@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { PropsRoute } from './helpers';
+import { PropsRoute, PrivateRoute, userAuth } from './helpers';
 import { Button, Menu, Image } from 'semantic-ui-react';
 import Home from './Home';
 import Login from './Login';
@@ -11,13 +11,16 @@ import UserProfileWithInfo from './UserProfile';
 import jwt from 'jwt-decode';
 
 
-const LoggedOutButtons = () => (
+const LoggedOutButtons = (props) => (
           <Menu.Menu position='right'>
             <Menu.Item>
-              <Link to='/login'><Button>Login</Button></Link>
+              <Button color='orange' onClick={props.signout}>AUTH DIF COMPONENT</Button>
             </Menu.Item>
             <Menu.Item>
-              <Link to='/signup'><Button>Signup</Button></Link>
+              <Link to='/login'><Button color='orange'>Login</Button></Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to='/signup'><Button color='orange'>Signup</Button></Link>
             </Menu.Item>
           </Menu.Menu>
   );
@@ -49,23 +52,25 @@ const LoggedInButtons = () => {
 
 
 class Routes extends Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       userLoggedIn: false
     }
   }
   
-  toggleUserLogin = () => this.setState({userLoggedIn: !this.state.userLoggedIn});
+  signout = () => userAuth.authenticate( () => console.log(userAuth.isAuthenticated))
+  
+  toggleUserLogin = () => {
+    this.setState({userLoggedIn: !this.state.userLoggedIn});
+  }
   
   render(){
-    
-    
     return(
     <Router>
       <div id='App'>
         
-        <Menu fixed='top'>
+        <Menu fixed='top' inverted>
           <Menu.Item>
             <Link to='/'>
               <Image width={50} 
@@ -74,7 +79,7 @@ class Routes extends Component{
             </Link>
           </Menu.Item>
           
-          {this.state.userLoggedIn === false ? <LoggedOutButtons/> : <LoggedInButtons/>}
+          {this.state.userLoggedIn === false ? <LoggedOutButtons signout={this.signout}/> : <LoggedInButtons/>}
         
         </Menu>
         
@@ -83,7 +88,7 @@ class Routes extends Component{
           <PropsRoute path='/login' component={Login} login={this.toggleUserLogin}/>
           <PropsRoute path='/logout' component={Logout} logout={this.toggleUserLogin}/>
           <Route path='/signup' component={Signup}/>
-          <Route path='/user/:username' component={UserProfileWithInfo}/>
+          <PrivateRoute path='/user/:username' component={UserProfileWithInfo} redirectTo='/login'/>
           <Route component={NoMatch}/>
         </Switch>
         

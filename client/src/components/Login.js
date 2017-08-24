@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { Form, Input, Header, Button, Icon } from 'semantic-ui-react';
+import { Form, Input, Header, Button, Icon, Message } from 'semantic-ui-react';
 import jwt from 'jwt-decode';
+
 
 export default class Login extends Component{
   constructor(){
     super()
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      hidden: true,
+      message: ''
     }
   }
+  
+  handleDismiss = () => this.setState({hidden: true})
   
   init = () => this.setState({username: '', password: ''})
   
@@ -20,8 +25,14 @@ export default class Login extends Component{
       }
       else{
           const decoded = jwt(token);
+          if(!decoded.username){
+            this.setState({hidden: false, message: 'Invalid User Token'})
+          }
+          else if(decoded.username){
           this.props.login();
           this.props.history.push(`/user/${decoded.username}`);
+          }
+          
       }
   }
   
@@ -41,7 +52,14 @@ export default class Login extends Component{
     }
     window.fetch("/login", options)
         .then(res => res.json())
-        .then(json => window.localStorage.setItem("token",json.newToken))
+        .then(json => {
+          if(json.error){
+            this.setState({hidden: false, message: json.error})
+          }
+          else if(json.newToken){
+            window.localStorage.setItem("token",json.newToken)
+          }
+        })
         .then(() => this.init())
         .then(() => this.auth())
         .catch(err => console.log(err))
@@ -71,8 +89,13 @@ export default class Login extends Component{
           <Icon name='sign in'/>
           Submit
         </Button>
-        
       </Form>
+      
+      <Message id='login-error-message' error hidden={this.state.hidden} onDismiss={this.handleDismiss}>
+        <Message.Header>Login Error</Message.Header>
+        <Message.Content>{this.state.message}</Message.Content>
+      </Message>
+      
     </div>
         )
     }

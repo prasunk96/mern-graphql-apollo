@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Icon } from 'semantic-ui-react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
-// Wrap all `react-google-maps` components with `withGoogleMap` HOC
-// and name it GettingStartedGoogleMap
 const SimpleMapExampleGoogleMap = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={12}
@@ -13,7 +11,10 @@ const SimpleMapExampleGoogleMap = withGoogleMap(props => (
             onClick={props.toggleInfo}>
         
         {props.showInfo ? <InfoWindow>
-                                    <Icon name='home'/>
+                            <div>                    
+                                <Icon name='home'/>
+                                <span>{props.username}</span>
+                            </div>
                                  </InfoWindow>
                                : null}
         
@@ -24,9 +25,7 @@ const SimpleMapExampleGoogleMap = withGoogleMap(props => (
   </GoogleMap>
 ));
 
-/*
- * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
- */
+
 export default class UserProfileMap extends Component {
     constructor(){
         super()
@@ -40,8 +39,8 @@ export default class UserProfileMap extends Component {
     }
     
   render() {
-      const mapContainerStyle = {height: `50vh`, width: `50vh`, position: `relative`}
-      const mapElementStyle = {height: `50vh`, width: `50vh`}
+      const mapContainerStyle = { height: `50vh`, width: `100vh`, position: `relative`, margin: `5vh auto`, border: `1px solid #e5e5e5`, borderRadius: `5px`, boxShadow: `2px 5px 5px #e5e5e5` }
+      const mapElementStyle = { height: `50vh`, width: `100vh`, borderRadius: `5px` }
       let lat = this.props.data.lat
       let lng = this.props.data.lon
       let marker = [{position: new window.google.maps.LatLng(lat,lng)}]
@@ -53,6 +52,7 @@ export default class UserProfileMap extends Component {
         marker={marker}
         showInfo={this.state.showInfo}
         toggleInfo={this.toggleInfo}
+        username={this.props.data.username}
       />
     );
   }

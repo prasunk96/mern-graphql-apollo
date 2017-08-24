@@ -14,16 +14,25 @@
 }
 
 #user-card {
-    width: 50vh;
     margin-top: 5vh;
+    width: 50vh;
+    height: 83vh;
     img{
         width: 50vh;
         height: 50vh;
     }
-    
 }
 
 #user-skills-card {
     margin-top: 5vh;
     width: 45vw;
+    height: 83vh;
+    overflow-y: auto;
+}
+
+#portal-button {
+    width: 25vw;
+    height: 10vh;
+    margin: 5vh 37.5vw 5vh 37.5vw;
+    font: 1.5rem $primaryFont;
 }

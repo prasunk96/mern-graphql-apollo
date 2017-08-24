@@ -3,7 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 
 const pubsub = new PubSub();
 
-let nextId = 1;
+let nextId = 2;
 
 export const resolvers = {
     Query: {

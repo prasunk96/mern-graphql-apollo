@@ -16,6 +16,8 @@
     .signup-form-wrapper .flex-column .input {
       margin-bottom: 5vh;
       width: 32vw; }
+  .signup-form-wrapper #login-error-message {
+    width: 40vw; }
 
 .user-profile-wrapper {
   display: flex;
@@ -29,18 +31,29 @@
   justify-content: space-between; }
 
 #user-card {
+  margin-top: 5vh;
   width: 50vh;
-  margin-top: 5vh; }
+  height: 83vh; }
   #user-card img {
     width: 50vh;
     height: 50vh; }
 
 #user-skills-card {
   margin-top: 5vh;
-  width: 45vw; }
+  width: 45vw;
+  height: 83vh;
+  overflow-y: auto; }
 
-#hello {
-  color: #e53b3b; }
+#portal-button {
+  width: 25vw;
+  height: 10vh;
+  margin: 5vh 37.5vw 5vh 37.5vw;
+  font: 1.5rem "Encode Sans", Arial, sans-serif; }
+
+#home-wrapper {
+  margin-top: 17vh; }
+  #home-wrapper h1 {
+    font: 4rem "Encode Sans", Arial, sans-serif; }
 
 .flex-row {
   display: flex;

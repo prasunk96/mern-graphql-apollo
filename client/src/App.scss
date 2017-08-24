@@ -1,16 +1,15 @@
 @import './sass/_variables';
 @import './sass/_Signup';
 @import './sass/_UserProfile';
+@import './sass/_Home';
 
-#hello{
-  color: $error;
-}
 
 //HELPER CLASSES
 .flex-row {
     display: flex;
-
     justify-content: space-around;
 }
+
+
 
 

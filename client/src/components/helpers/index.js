@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 //SET OF HELPER FUNCTIONS AND COMPONENTS
 
@@ -19,6 +19,34 @@ export const PropsRoute = ({ component, ...rest }) => {
     }}/>
   );
 }
+
+export const userAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    setTimeout(cb,100)
+  },
+  signout(cb) {
+    this.isAuthenticated = false
+    setTimeout(cb, 100)
+  }
+}
+
+export const PrivateRoute = ({ component, redirectTo, ...rest }) => {
+  return (
+    <Route {...rest} render={routeProps => {
+      console.log(userAuth.isAuthenticated)
+      return userAuth.isAuthenticated ? (
+        renderMergedProps(component, routeProps, rest)
+      ) : (
+        <Redirect to={{
+          pathname: redirectTo,
+          state: { from: routeProps.location }
+        }}/>
+      );
+    }}/>
+  );
+};
 
 //FUNCTION TO PARSE VERBOSE MONTH FROM NUMBERS
 export const monthParse = (month) => {

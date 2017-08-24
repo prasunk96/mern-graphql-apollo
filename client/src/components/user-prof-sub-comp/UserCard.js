@@ -17,7 +17,7 @@ const UserCard = ({data}) => {
     </Card.Content>
     <Card.Content extra>
       <Icon name='user' />
-      22 Friends/More Data
+      More Data
     </Card.Content>
    </Card>
     );

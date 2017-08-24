@@ -107,6 +107,7 @@ class UserProfileForm extends Component {
       <Grid.Column width={14}>
         <div>
           <Message
+            color='orange'
             attached
             header={`Hey ${this.props.data.username}!`}
             content='Fill out this Form to complete your User Profile' />
@@ -144,20 +145,15 @@ class UserProfileForm extends Component {
                             readOnly={this.state.geo.lon.length>0}/>
             </Form.Group>
           
-            <Button fluid onClick={this.geoInit} animated size='huge' color='orange'>
-              <Button.Content visible>
-                Allow Geolocation
-              </Button.Content>
-              <Button.Content hidden>
-                <Icon size='medium' name='world' />
-              </Button.Content>
+            <Button fluid onClick={this.geoInit} color='orange'>
+              Allow Geolocation
             </Button><br/>
         
           
           </Form>
-          <Message attached='bottom' warning>
+          <Message attached='bottom' color='orange'>
             <Icon name='info' />
-              By Clicking  <Label color='brown'>Allow Geolocation</Label>  you allow this App
+              By Clicking  <Label color='orange'>Allow Geolocation</Label>  you allow this App
               to compute your location.  Google Chrome best practices suggest letting, you, the user,
               activate geolocation through an action.  We use this information to connect you with 
               other people near you who are interested in React
@@ -247,11 +243,6 @@ class UserProfileForm extends Component {
 const addUserProfile = gql`
 mutation addUserProfile($input: ProfileInput!) {
   addUserProfile(input: $input) {
-    id
-    username
-    password
-    email
-    createdOn
     profilePic
   }
 }

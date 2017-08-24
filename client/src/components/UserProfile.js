@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { Button } from 'semantic-ui-react';
+import { Portal, Button } from 'semantic-ui-react';
 import UserProfileFormWithMutation from './user-prof-sub-comp/UserProfileForm';
 import UserCard from './user-prof-sub-comp/UserCard';
 import UserSkills from './user-prof-sub-comp/UserSkills';
-import UserProfileHeader from './user-prof-sub-comp/Header';
+import { UserEditProfileHeader, UserViewProfileHeader } from './user-prof-sub-comp/Headers';
 import UserProfileMap from './user-prof-sub-comp/UserMap';
 
 class UserProfile extends Component{
+   constructor(props){
+     super(props);
+     this.state = {
+       open: false
+     }
+   }
    
     componentWillMount(){
         this.props.data.subscribeToMore({
@@ -18,16 +24,15 @@ class UserProfile extends Component{
           return prev;
         }
         const newUser = subscriptionData.data.user;
-
         console.log('subscription fired');
         return newUser;
             }
         })
     }
     
-    stuff = () => {
-        console.log(this.props)
-    }
+    handleOpen = () => this.setState({open: true})
+    
+    handleClose = () => this.setState({open: false})
     
     render(){
         const data = this.props.data;
@@ -38,17 +43,35 @@ class UserProfile extends Component{
         if(data.me){
             return(
             <div className='user-profile-wrapper'>
-              
-              <UserProfileHeader/>
-              
+          
+              <UserViewProfileHeader/>
+            {data.me.bio === '' ? null :
               <div className='flex-row'>
                 <UserCard data={data.me}/>
                 <UserSkills data={data.me}/>
+              </div>}
+              
+              {/* <UserProfileMap data={data.me}/>*/}
+              
+              <Portal 
+                openOnTriggerClick
+                closeOnTriggerClick
+                onOpen={this.handleOpen}
+                onClose={this.handleClose}
+                trigger={(
+                  <Button id='portal-button'
+                          content={this.state.open ? 'Close Profile Options' : 'Create or Edit Your Profile' }
+                          color={this.state.open ? 'black' : 'orange'}/>
+                  
+                  )}>
+                
+              <div>
+                <UserEditProfileHeader/>
+                <UserProfileFormWithMutation data={data.me}/>
               </div>
-              {/*<UserProfileMap data={data.me}/>*/}
-              <UserProfileFormWithMutation data={data.me}/>
-          
-            <Button onClick={this.stuff}>CONSOLE LOG PROPS</Button>
+              
+              </Portal>
+            
             </div>
             );
         }
