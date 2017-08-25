@@ -35,7 +35,6 @@ export const userAuth = {
 export const PrivateRoute = ({ component, redirectTo, ...rest }) => {
   return (
     <Route {...rest} render={routeProps => {
-      console.log(userAuth.isAuthenticated)
       return userAuth.isAuthenticated ? (
         renderMergedProps(component, routeProps, rest)
       ) : (

@@ -55,6 +55,9 @@
   #home-wrapper h1 {
     font: 4rem "Encode Sans", Arial, sans-serif; }
 
+#user-search-wrapper {
+  margin-top: 20vh; }
+
 .flex-row {
   display: flex;
   justify-content: space-around; }
