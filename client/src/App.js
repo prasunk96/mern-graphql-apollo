@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     return (
         <ApolloProvider client={client}>
-          <Routes/>
+          <Routes resetStore={client.resetStore}/>
         </ApolloProvider>
     );
   }

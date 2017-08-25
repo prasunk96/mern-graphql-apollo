@@ -37,14 +37,15 @@ class UserProfile extends Component{
     render(){
         const data = this.props.data;
 
-        if(data.error)return(<h1>{data.error.message}</h1>);
-        if(data.loading)return(<h1>Loading</h1>);
-        if(data.me===null)return(<h1>NOT AUTHENTICATED</h1>);
+        if(data.error)return(<div className='user-profile-wrapper'><h1>{data.error.message}</h1></div>);
+        if(data.loading)return(<div className='user-profile-wrapper'><h1>Loading</h1></div>);
+        if(data.me===null)return(<div className='user-profile-wrapper'><h1>NOT AUTHENTICATED</h1></div>);
         if(data.me){
             return(
             <div className='user-profile-wrapper'>
           
               <UserViewProfileHeader/>
+
             {data.me.bio === '' ? null :
               <div className='flex-row'>
                 <UserCard data={data.me}/>

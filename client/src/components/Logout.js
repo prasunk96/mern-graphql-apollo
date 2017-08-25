@@ -7,7 +7,7 @@ export default class Logout extends Component{
     }
     render(){
         return(
-            <h1>You are LoggedOut</h1>
+            <h1 style={{marginTop: `15vh`}}>You are LoggedOut</h1>
             );
     }
 }

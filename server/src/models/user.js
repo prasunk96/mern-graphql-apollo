@@ -16,10 +16,7 @@ const SkillSchema = new Schema({
 let User;
 
 const UserSchema = new Schema({
-   id: {
-       type: String,
-       unique: true
-   },
+   
    username: {
        type: String,
        unique: true,

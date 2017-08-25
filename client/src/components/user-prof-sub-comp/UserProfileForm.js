@@ -111,7 +111,6 @@ class UserProfileForm extends Component {
             attached
             header={`Hey ${this.props.data.username}!`}
             content='Fill out this Form to complete your User Profile' />
-            
           <Form className='attached fluid segment'>
             
             <Form.Input type='text'

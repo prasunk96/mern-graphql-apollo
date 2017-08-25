@@ -4,8 +4,8 @@ import jwt from 'jwt-decode';
 
 
 export default class Login extends Component{
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       username: '',
       password: '',
@@ -30,6 +30,7 @@ export default class Login extends Component{
           }
           else if(decoded.username){
           this.props.login();
+          console.log(this.props);
           this.props.history.push(`/user/${decoded.username}`);
           }
           

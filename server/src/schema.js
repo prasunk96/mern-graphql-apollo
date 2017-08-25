@@ -13,7 +13,7 @@ input SkillInput {
 }
 
 type User {
-    id: ID!
+    id: ID
     username: String
     email: String
     password: String

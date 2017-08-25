@@ -3,8 +3,6 @@ import { PubSub } from 'graphql-subscriptions';
 
 const pubsub = new PubSub();
 
-let nextId = 2;
-
 export const resolvers = {
     Query: {
         users: (root, args) => {
@@ -14,14 +12,14 @@ export const resolvers = {
             })
         },
         user: (root, { id }) => {
-            return User.findOne({id: id}, (err, user) => {
+            return User.findOne({_id: id}, (err, user) => {
                 if(err) throw new Error(err);
                 return user;
             })
         },
         me: (root, args, context) => {
             console.log('me query');
-            return User.findOne({id: context.user.id}, (err, user) => {
+            return User.findOne({_id: context.user.id}, (err, user) => {
                 if(err) throw new Error(err);
                 return user;
             })
@@ -29,7 +27,7 @@ export const resolvers = {
     },
     Mutation: {
         addUser: (root, { user }) => {
-            let newUser = new User({id: String(nextId++), username: user.username, email: user.email, password: user.password});
+            let newUser = new User({ username: user.username, email: user.email, password: user.password });
             return newUser.save((err) => {
                 if(err) console.log(err.message);
                 console.log(newUser)
@@ -39,7 +37,7 @@ export const resolvers = {
          addUserProfile: (root, { input }, context) => {
         
                 let update = { profilePic: input.profilePic, bio: input.bio, lat: input.lat, lon: input.lon, city: input.city, skills: input.skills };
-                let query = { id: context.user.id };
+                let query = { _id: context.user.id };
                 let options = { new: true, upsert: true};
                 return User.findOneAndUpdate(query, update, options).exec()
                 .then(user => {

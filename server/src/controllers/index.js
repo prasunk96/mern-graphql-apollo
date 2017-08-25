@@ -15,7 +15,7 @@ export const handleLogin = (req, res, next) => {
           return res.json({newToken: jwt.sign({ 
             email: user.email, 
             username: user.username, 
-            id: user.id, 
+            id: user._id, 
             profilePic: user.profilePic, 
             createdOn: user.createdOn}, jwtSecret, { expiresIn: '24h' })});
       }

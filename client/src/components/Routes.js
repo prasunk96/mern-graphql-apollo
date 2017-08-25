@@ -14,9 +14,6 @@ import jwt from 'jwt-decode';
 const LoggedOutButtons = (props) => (
           <Menu.Menu position='right'>
             <Menu.Item>
-              <Button color='orange' onClick={props.signout}>AUTH DIF COMPONENT</Button>
-            </Menu.Item>
-            <Menu.Item>
               <Link to='/login'><Button color='orange'>Login</Button></Link>
             </Menu.Item>
             <Menu.Item>
@@ -50,6 +47,15 @@ const LoggedInButtons = () => {
   );
 }
 
+const PrivateUserProfile = () => {
+  let token = window.localStorage.getItem('token');
+  let decoded = token ? jwt(token) : null;
+  let profileLink = decoded ? `/user/${decoded.username}` : '/';
+  return(
+  <PrivateRoute path={profileLink} component={UserProfileWithInfo} redirectTo='/login'/>
+  );
+}
+
 
 class Routes extends Component{
   constructor(props){
@@ -58,11 +64,22 @@ class Routes extends Component{
       userLoggedIn: false
     }
   }
+  componentWillMount(){
+    console.log('WM')
+  }
+  userLogin = () => {
+    userAuth.authenticate( () => {
+      console.log(userAuth.isAuthenticated)
+      this.setState({userLoggedIn: true});
+    })
+  }
   
-  signout = () => userAuth.authenticate( () => console.log(userAuth.isAuthenticated))
-  
-  toggleUserLogin = () => {
-    this.setState({userLoggedIn: !this.state.userLoggedIn});
+  userLogout = () => {
+    userAuth.signout(() => {
+      console.log(userAuth.isAuthenticated)
+      this.setState({userLoggedIn: false})
+      this.props.resetStore()
+    })
   }
   
   render(){
@@ -79,16 +96,16 @@ class Routes extends Component{
             </Link>
           </Menu.Item>
           
-          {this.state.userLoggedIn === false ? <LoggedOutButtons signout={this.signout}/> : <LoggedInButtons/>}
+          {userAuth.isAuthenticated === false ? <LoggedOutButtons/> : <LoggedInButtons/>}
         
         </Menu>
         
         <Switch>
           <Route exact path='/' component={Home}/>
-          <PropsRoute path='/login' component={Login} login={this.toggleUserLogin}/>
-          <PropsRoute path='/logout' component={Logout} logout={this.toggleUserLogin}/>
+          <PropsRoute path='/login' component={Login} login={this.userLogin}/>
+          <PropsRoute path='/logout' component={Logout} logout={this.userLogout}/>
           <Route path='/signup' component={Signup}/>
-          <PrivateRoute path='/user/:username' component={UserProfileWithInfo} redirectTo='/login'/>
+          {userAuth.isAuthenticated ? <PrivateUserProfile/> : null}
           <Route component={NoMatch}/>
         </Switch>
         

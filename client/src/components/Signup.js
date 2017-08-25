@@ -28,7 +28,7 @@ class Signup extends Component{
       console.log(data)
       this.props.history.push('/login')
     }).catch((err) => {
-      console.log(`there was an error: ${err}`)
+      console.log(`there was an error: ${err.message}`)
     })
     this.setState({
       username: '',
@@ -78,9 +78,7 @@ class Signup extends Component{
 const addUserMutation = gql`
   mutation addUser($user: UserInput!) {
     addUser(user: $user) {
-      id
       username
-      email
     }
   }
 `
