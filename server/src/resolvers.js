@@ -19,10 +19,19 @@ export const resolvers = {
         },
         me: (root, args, context) => {
             console.log('me query');
-            return User.findOne({_id: context.user.id}, (err, user) => {
+            if(context.user.id){
+              return User.findOne({_id: context.user.id}, (err, user) => {
                 if(err) throw new Error(err);
                 return user;
-            })
+            });  
+            }
+            else if(context.user.fbId){
+               return User.findOne({fbId: context.user.fbId}, (err, user) => {
+                   if(err) throw new Error(err);
+                   return user
+               }); 
+            }
+            
         }
     },
     Mutation: {

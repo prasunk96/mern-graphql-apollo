@@ -40,6 +40,7 @@ class UserProfile extends Component{
         if(data.error)return(<div className='user-profile-wrapper'><h1>{data.error.message}</h1></div>);
         if(data.loading)return(<div className='user-profile-wrapper'><h1>Loading</h1></div>);
         if(data.me===null)return(<div className='user-profile-wrapper'><h1>NOT AUTHENTICATED</h1></div>);
+        if(data.me.fbId.length>1)return(<div className='user-profile-wrapper'><h1>FB USER</h1></div>);
         if(data.me){
             return(
             <div className='user-profile-wrapper'>
@@ -92,6 +93,7 @@ const getUserInfo = gql`
             lat
             lon
             city
+            fbId
             skills{
               name
               value
@@ -112,6 +114,7 @@ const profilePicSubscription = gql`
             lat
             lon
             city
+            fbId
             skills{
               name
               value

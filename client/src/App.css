@@ -18,6 +18,8 @@
       width: 32vw; }
   .signup-form-wrapper #login-error-message {
     width: 40vw; }
+  .signup-form-wrapper #fb-signup {
+    margin-top: 2vh; }
 
 .user-profile-wrapper {
   display: flex;

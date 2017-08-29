@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { Search, Label, Grid, Header } from 'semantic-ui-react';
+import { Search, Grid, Header, Rating } from 'semantic-ui-react';
 import { gql, graphql } from 'react-apollo';
 import _ from 'lodash';
+//import PropTypes from 'prop-types'
 
-const resultRenderer = ((results) => <p>{results.skills[0].name}</p>)
+const resultRenderer = results => results.skills.map((skill,index) => (
+    <div key={index}>
+    <p>{skill.name}</p>
+    <Rating icon='star' rating={skill.value} maxRating={5}/>
+    </div>
+    )) 
+
+
 
 class UserSearch extends Component {
     constructor(props){
@@ -42,13 +50,14 @@ class UserSearch extends Component {
   }
     
     render(){
-        
+
         return(
             <div id='user-search-wrapper'>
               <Grid>
                 <Grid.Column width={8}>
                     <Search placeholder={this.state.placeholder}
                         size='large'
+                        fluid
                         minCharacters={3}
                         onResultSelect={this.handleResultSelect}
                         onSearchChange={this.handleSearchChange}

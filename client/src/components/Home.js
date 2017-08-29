@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Image, Header, Icon } from 'semantic-ui-react';
 
 
-const Home = () => (
+class Home extends Component {
+    
+    componentWillMount(){
+        console.log('home will mount')
+    }
+    
+    render(){
+        return(
     <div id='home-wrapper'>
         
         <Image src='https://s3-us-west-1.amazonaws.com/learnreact/assets/react-graphql-apollo.svg'
@@ -20,6 +27,9 @@ const Home = () => (
         <p id='test'>TEST</p>
                
     </div>
-    );
+            )
+    }
+}
+    
 
 export default Home;

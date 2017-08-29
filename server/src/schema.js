@@ -24,6 +24,8 @@ type User {
     bio: String
     skills: [Skill]
     createdOn: String
+    fbId: String
+    jwt: String
 }
 
 input UserInput {

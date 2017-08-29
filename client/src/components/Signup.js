@@ -70,6 +70,11 @@ class Signup extends Component{
         </Button>
         
       </Form>
+      
+      <a href='https://apollo-react-project-benjaminadk.c9users.io:8081/auth/facebook' id='fb-signup'>
+        <Button color='facebook'>Signup With Facebook &nbsp; <Icon name='facebook'/></Button>
+      </a>
+      
     </div>
         )
     }

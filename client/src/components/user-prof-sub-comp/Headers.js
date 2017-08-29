@@ -12,7 +12,7 @@ const UserViewProfileHeader = () => (
     )
 
 const UserEditProfileHeader = () => (
-    <Header as='h1' icon>
+    <Header as='h1' icon textAlign='center'>
         <Icon name='settings' />
             Profile Settings
         <Header.Subheader>

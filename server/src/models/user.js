@@ -16,7 +16,14 @@ const SkillSchema = new Schema({
 let User;
 
 const UserSchema = new Schema({
-   
+   fbId: {
+     type: String,
+     default: ''
+   },
+   jwt: {
+       type: String,
+       default: ''
+   },
    username: {
        type: String,
        unique: true,
@@ -91,6 +98,10 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 //static methods
 UserSchema.static("findByUsername", function(username, cb){
     User.findOne({username: username}, cb)
+});
+
+UserSchema.static("findByFbId", function(fbId, cb){
+    User.findOne({fbId: fbId}, cb)
 });
 
 UserSchema.static("attemptLogin", function(username, password, cb){
