@@ -1,35 +1,36 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
 import { Form, Button, Grid, Message, Label, Icon, Rating, Header } from 'semantic-ui-react';
+import { UserSkillsHeaderMessage } from './Headers';
 
 class UserProfileForm extends Component {
     constructor(props){
         super(props)
     this.state = {
         loading: false,
-        profilePic: '',
-        bio: '',
-        city: '',
+        profilePic: this.props.data.profilePic||'',
+        bio: this.props.data.bio||'',
+        city: this.props.data.city||'',
         geo: {
-          lat: '',
-          lon: ''
+          lat: this.props.data.lat,
+          lon: this.props.data.lon
         },
         rates: [
-          {name: 'React DOM' ,value: 0},
-          {name: 'React Native' ,value: 0},
-          {name: 'ES6' ,value: 0},
-          {name: 'State & Props' ,value: 0},
-          {name: 'JSX' ,value: 0},
-          {name: 'Create React App' ,value: 0},
-          {name: 'React Router 4' ,value: 0},
-          {name: 'React Apollo' ,value: 0},
-          {name: 'Helmet' ,value: 0},
-          {name: 'Component Libraries' ,value: 0},
-          {name: 'Server Side Render' ,value: 0},
-          {name: 'Webpack' ,value: 0},
-          {name: 'Higher Order Component' ,value: 0},
-          {name: 'Redux' ,value: 0},
-          {name: 'Lifecycle Methods' ,value: 0}
+          {name: 'React DOM' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[0].value : 0},
+          {name: 'React Native' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[1].value : 0},
+          {name: 'ES6' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[2].value : 0},
+          {name: 'State & Props' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[3].value : 0},
+          {name: 'JSX' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[4].value : 0},
+          {name: 'Create React App' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[5].value : 0},
+          {name: 'React Router 4' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[6].value : 0},
+          {name: 'React Apollo' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[7].value : 0},
+          {name: 'Helmet' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[8].value : 0},
+          {name: 'Component Libraries' ,value: this.props.data.skills.length > 0 ? this.props.data.skills[9].value : 0},
+          {name: 'Server Side Render' ,value: this.props.data.skills.length > 0  ? this.props.data.skills[10].value : 0},
+          {name: 'Webpack' ,value: this.props.data.skills.length > 0  ? this.props.data.skills[11].value : 0},
+          {name: 'Higher Order Component' ,value: this.props.data.skills.length > 0  ? this.props.data.skills[12].value : 0},
+          {name: 'Redux' ,value: this.props.data.skills.length > 0  ? this.props.data.skills[13].value : 0},
+          {name: 'Lifecycle Methods' ,value: this.props.data.skills.length > 0  ? this.props.data.skills[14].value : 0}
         ]
      }
         this.geoInit = this.geoInit.bind(this)
@@ -94,8 +95,6 @@ class UserProfileForm extends Component {
             }
         }).then(({data}) => {
             window.localStorage.setItem('profilePic',data.addUserProfile.profilePic);
-        }).then( () => {
-            this.setState({profilePic: '', bio: ''});
         }).catch((err) => {
             console.log(err)
         })
@@ -106,11 +105,13 @@ class UserProfileForm extends Component {
    <Grid columns={1} centered>
       <Grid.Column width={14}>
         <div>
+        
           <Message
             color='orange'
             attached
             header={`Hey ${this.props.data.username}!`}
             content='Fill out this Form to complete your User Profile' />
+            
           <Form className='attached fluid segment'>
             
             <Form.Input type='text'
@@ -148,7 +149,6 @@ class UserProfileForm extends Component {
               Allow Geolocation
             </Button><br/>
         
-          
           </Form>
           <Message attached='bottom' color='orange'>
             <Icon name='info' />
@@ -157,6 +157,8 @@ class UserProfileForm extends Component {
               activate geolocation through an action.  We use this information to connect you with 
               other people near you who are interested in React
           </Message>
+          
+          <UserSkillsHeaderMessage/>
           
           <Grid id='ratings-wrapper' columns ='equal' relaxed padded stackable container>
              
@@ -232,7 +234,9 @@ class UserProfileForm extends Component {
              
           </Grid.Column>
          </Grid>
+         
           <Button onClick={this.addUserProfile}>Submit</Button>
+          <Button onClick={ () => console.log(this.props)}>Console Log Props</Button>
         </div>
       </Grid.Column>
     </Grid>

@@ -65,6 +65,7 @@ export default class Login extends Component{
         .then(() => this.auth())
         .catch(err => console.log(err))
   }
+
   
     render(){
         return(
@@ -91,6 +92,10 @@ export default class Login extends Component{
           Submit
         </Button>
       </Form>
+      
+      <a href='https://apollo-react-project-benjaminadk.c9users.io:8081/auth/facebook' className='fb-oauth'>
+        <Button color='facebook'>Log In With Facebook &nbsp; <Icon name='facebook'/></Button>
+      </a>
       
       <Message id='login-error-message' error hidden={this.state.hidden} onDismiss={this.handleDismiss}>
         <Message.Header>Login Error</Message.Header>

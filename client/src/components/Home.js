@@ -4,10 +4,6 @@ import { Image, Header, Icon } from 'semantic-ui-react';
 
 class Home extends Component {
     
-    componentWillMount(){
-        console.log('home will mount')
-    }
-    
     render(){
         return(
     <div id='home-wrapper'>
@@ -16,7 +12,7 @@ class Home extends Component {
                width={300} centered/>
         
         <Header as='h1' textAlign='center'>
-            <Header.Content>React Connect</Header.Content>
+            <Header.Content>React P2P</Header.Content>
             <Header.Subheader>A Peer to Peer Learning Platform for React</Header.Subheader>
             <Header.Content>
                 <a href='#test'>

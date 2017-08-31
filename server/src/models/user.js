@@ -27,8 +27,7 @@ const UserSchema = new Schema({
    username: {
        type: String,
        unique: true,
-       trim: true,
-       lowercase: true
+       trim: true
    },
    email: {
        type: String,
@@ -49,11 +48,11 @@ const UserSchema = new Schema({
    },
     lat: {
         type: Number,
-        default: 33
+        default: 0
     },
     lon: {
        type: Number,
-       default: -118
+       default: 0
     },
     city: {
        type: String,

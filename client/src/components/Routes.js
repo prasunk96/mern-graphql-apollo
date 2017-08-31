@@ -6,9 +6,11 @@ import Home from './Home';
 import Login from './Login';
 import Logout from './Logout';
 import Signup from './Signup';
+import OauthWithUser from './Oauth';
 import NoMatch from './NoMatch';
 import UserProfileWithInfo from './UserProfile';
 import UserSearch from './Search';
+import ConnectionWithData from './Connection';
 import jwt from 'jwt-decode';
 
 
@@ -41,6 +43,10 @@ const LoggedInButtons = () => {
             </Menu.Item>
             
             <Menu.Item>
+              <Link to='/connection'><Button color='orange'>Connect</Button></Link>
+            </Menu.Item>
+            
+            <Menu.Item>
               <Link to={profileLink}><Button color='orange'>Profile</Button></Link>
             </Menu.Item>
             
@@ -67,6 +73,7 @@ const PrivateUserProfile = () => {
   <Switch>
     <PrivateRoute path={profileLink} component={UserProfileWithInfo} redirectTo='/login'/>
     <PrivateRoute path='/search' component={UserSearch} redirectTo='/login'/>
+    <PrivateRoute path='/connection' component={ConnectionWithData} redirectTo='/login'/>
   </Switch>
   );
 }
@@ -116,8 +123,8 @@ class Routes extends Component{
           <PropsRoute path='/login' component={Login} login={this.userLogin}/>
           <PropsRoute path='/logout' component={Logout} logout={this.userLogout}/>
           <Route path='/signup' component={Signup}/>
+          <PropsRoute path='/oauth/:fbid' component={OauthWithUser} login={this.userLogin}/>
           { userAuth.isAuthenticated ? <PrivateUserProfile/> : null }
-          
           <Route component={NoMatch}/>
         </Switch>
         

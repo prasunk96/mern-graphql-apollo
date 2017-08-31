@@ -32,6 +32,12 @@ export const resolvers = {
                }); 
             }
             
+        },
+        fbUser: (root, { fbId }) => {
+            return User.findOne({fbId: fbId}, (err, user) => {
+                if(err) throw new Error(err);
+                return user
+            });
         }
     },
     Mutation: {

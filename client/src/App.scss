@@ -10,6 +10,10 @@
     justify-content: space-around;
 }
 
+//GET RID OF ORANGE BORDER ON ORANGE COLOR MESSAGES
+.ui.orange.message {
+    box-shadow: 0 0 0 1px #cccccc inset, 0 0 0 0 transparent;
+}
 
 
 

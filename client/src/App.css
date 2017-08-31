@@ -18,7 +18,7 @@
       width: 32vw; }
   .signup-form-wrapper #login-error-message {
     width: 40vw; }
-  .signup-form-wrapper #fb-signup {
+  .signup-form-wrapper .fb-oauth {
     margin-top: 2vh; }
 
 .user-profile-wrapper {
@@ -52,6 +52,10 @@
   margin: 5vh 37.5vw 5vh 37.5vw;
   font: 1.5rem "Encode Sans", Arial, sans-serif; }
 
+#user-skills-header {
+  margin-top: 5vh;
+  margin-bottom: 2vh; }
+
 #home-wrapper {
   margin-top: 17vh; }
   #home-wrapper h1 {
@@ -63,3 +67,6 @@
 .flex-row {
   display: flex;
   justify-content: space-around; }
+
+.ui.orange.message {
+  box-shadow: 0 0 0 1px #cccccc inset, 0 0 0 0 transparent; }

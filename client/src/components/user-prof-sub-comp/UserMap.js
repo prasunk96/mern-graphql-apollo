@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Icon } from 'semantic-ui-react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
-const SimpleMapExampleGoogleMap = withGoogleMap(props => (
+const UserProfileGoogleMap = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={12}
     defaultCenter={props.center}>
@@ -45,7 +45,7 @@ export default class UserProfileMap extends Component {
       let lng = this.props.data.lon
       let marker = [{position: new window.google.maps.LatLng(lat,lng)}]
     return (
-      <SimpleMapExampleGoogleMap
+      <UserProfileGoogleMap
         containerElement={<div style={mapContainerStyle} />}
         mapElement={<div style={mapElementStyle} />}
         center={{lat: lat, lng: lng }}
