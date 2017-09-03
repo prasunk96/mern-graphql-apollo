@@ -3,6 +3,7 @@
 @import './sass/_UserProfile';
 @import './sass/_Home';
 @import './sass/_UserSearch';
+@import './sass/_Connection';
 
 //HELPER CLASSES
 .flex-row {
@@ -15,5 +16,9 @@
     box-shadow: 0 0 0 1px #cccccc inset, 0 0 0 0 transparent;
 }
 
+//GET RID OF PADDING BELOW CHAT COMMENT TEXTAREA
+.ui.grid>.column:not(.row) {
+    padding-bottom: 0;
+}
 
 

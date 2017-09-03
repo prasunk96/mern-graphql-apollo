@@ -20,7 +20,7 @@ export const resolvers = {
         me: (root, args, context) => {
             console.log('me query');
             if(context.user.id){
-              return User.findOne({_id: context.user.id}, (err, user) => {
+              return User.findById(context.user.id, (err, user) => {
                 if(err) throw new Error(err);
                 return user;
             });  
@@ -44,29 +44,64 @@ export const resolvers = {
         addUser: (root, { user }) => {
             let newUser = new User({ username: user.username, email: user.email, password: user.password });
             return newUser.save((err) => {
-                if(err) console.log(err.message);
-                console.log(newUser)
+                if(err) return console.log(err.message);
+                
                 return newUser;
             })
         },
-         addUserProfile: (root, { input }, context) => {
+        addUserProfile: (root, { input }, context) => {
         
                 let update = { profilePic: input.profilePic, bio: input.bio, lat: input.lat, lon: input.lon, city: input.city, skills: input.skills };
                 let query = { _id: context.user.id };
-                let options = { new: true, upsert: true};
+                let options = { new: true, upsert: true };
                 return User.findOneAndUpdate(query, update, options).exec()
-                .then(user => {
+                .then( user => {
                 pubsub.publish('userAddedUserProfile', {userAddedUserProfile: user})
                 return user 
                 })
 
-            }
+            },
+        addDMComment: (root, { input }, context) => {
+            
+                let comment = { author: context.user.id, text: input.text };
+                let partner = input.partner;
+                let query = User.findById(context.user.id);
+                query.select('dms');
+                return query.exec()
+                
+                .then( user => {
+                    
+                    let currentDM = user.dms.find( (dm) => {
+                        return dm.partner == partner
+                    })
+                    console.log(`CURRENT: ${currentDM}`)
+                    if(currentDM === undefined){
+                        console.log('if block')
+                        let newDM = { partner: partner, comments: [] };
+                        newDM.comments.push(comment);
+                        user.dms.push(newDM);
+                        return user.save((err) => {
+                            if(err) console.log(err.message)
+                        })
+                    }
+                    else {
+                        console.log('else if block')
+                        currentDM.comments.push(comment);
+                        return user.save((err) => {
+                            if(err) console.log(err.message)
+                        })
+                    }
+                }).then(user => {
+                   return user.dms.find((dm) => {
+                       return dm.partner == partner
+                   })
+                })
+                
+        }
              
     },
     Subscription: {
-        userSignedUp: {
-            subscribe: () => pubsub.asyncIterator('userSignedUp')
-        },
+
         userAddedUserProfile: {
             subscribe: () => pubsub.asyncIterator('userAddedUserProfile')
         }

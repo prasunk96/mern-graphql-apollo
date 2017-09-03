@@ -1,18 +1,7 @@
 # NOTES
 
-- PRIVATE PROTECTED ROUTES FRONTEND
-- MIGHT NEED TO BRING LOGIN AND ROUTES TO SAME FILE TO SHARE AUTH OBJECT
-- SERVER SIDE CAN DO MORE WITH TOKEN AUTH
-
-### CONTENT FOR HOME PAGE?????
-
-### STYLING FOR USER PROFILE PAGE AND FORM
-
-### STYLING FOR LOGOUT PAGE
-
-### STYLING FOR 404
-
-### FUTURE NEEDS 
-- search engine
-- direct messaging? 
-- map for all users?
+- working on dm system
+- need avatar attached to comment
+- i think it must ref the author because author is a User _id
+- OR ref the partner for theirs and use context for current user
+- need to tie the conversation to the other user as well

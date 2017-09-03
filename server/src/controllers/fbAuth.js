@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 import { User } from '../connectors';
 
 require("dotenv").config();
+
 var fbId;
+
 const PORT = 8081;
 const HOST = `://${process.env.C9_HOSTNAME}`;
 const jwtSecret = process.env.JWT_SECRET;
@@ -25,6 +27,7 @@ const fbStratedy = new FacebookStrategy(
     User.findByFbId(fbId, (err, user) => {
         if(err){return console.log(err.message)}
         if(!user){
+            
             
             let newToken = jwt.sign({ 
                 email: fbEmail, 
@@ -55,8 +58,8 @@ const fbStratedy = new FacebookStrategy(
             .then( () => console.log('existing fb user gets new jwt'))
         }
     })
-    console.log(accessToken);
-    console.log(refreshToken);
+    //console.log(accessToken);
+    //console.log(refreshToken);
     cb(null, {});
     }
   );
@@ -66,8 +69,7 @@ const fbScope = passport.authenticate('facebook', { scope: ['email']});
 const fbCallback = passport.authenticate('facebook', { failureRedirect: `https${HOST}/signup`, session: false });
 
 const fbRedirect = (req, res) => {
-    console.log(`FACEBOOK:  ${fbId}`);
-    res.redirect(`https${HOST}/oauth/${fbId}`);
+  res.redirect(`https${HOST}/oauth/${fbId}`);
   };
 
 export { fbStratedy, fbScope, fbCallback, fbRedirect };

@@ -15,6 +15,26 @@ const SkillSchema = new Schema({
 
 let User;
 
+const DMCommentSchema = new Schema({
+    author: {
+        type: Schema.Types.ObjectId
+    },
+    text: {
+        type: String
+    },
+    postedOn: {
+        type: Date,
+        default: Date.now()
+    }
+})
+
+const DMConversationSchema = new Schema({
+    partner: {
+        type: Schema.Types.ObjectId
+    },
+    comments: [DMCommentSchema]    
+})
+
 const UserSchema = new Schema({
    fbId: {
      type: String,
@@ -59,12 +79,14 @@ const UserSchema = new Schema({
        default: ''
    },
    skills: [SkillSchema],
+   dms: [DMConversationSchema],
    createdOn: {
        type: Date,
        default: Date.now()
    }
 });
 
+//PRE SAVE PASSWORD HASHING
 UserSchema.pre('save', function(next) {
     var user = this;
 
@@ -86,7 +108,7 @@ UserSchema.pre('save', function(next) {
     });
 });
 
-//instance methods
+//INSTANCE METHOD TO CHECK LOGIN PASSWORD AGAINST HASH
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
@@ -94,7 +116,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
-//static methods
+//STATIC METHODS
 UserSchema.static("findByUsername", function(username, cb){
     User.findOne({username: username}, cb)
 });

@@ -64,9 +64,41 @@
 #user-search-wrapper {
   margin-top: 20vh; }
 
+#connection-card {
+  margin-top: 5vh;
+  width: 90%;
+  height: 75vh; }
+  #connection-card img {
+    height: 10vh;
+    width: 10vh;
+    border-radius: 5px; }
+  #connection-card #connection-header {
+    font: 2rem "Encode Sans", Arial, sans-serif;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; }
+  #connection-card #connection-skills {
+    overflow-y: auto;
+    height: 43vh; }
+  #connection-card #connection-button {
+    height: 10vh; }
+
+#connection-chat {
+  height: 85vh;
+  width: 95vw;
+  margin: 5vh auto; }
+  #connection-chat #chat-main {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; }
+
 .flex-row {
   display: flex;
   justify-content: space-around; }
 
 .ui.orange.message {
   box-shadow: 0 0 0 1px #cccccc inset, 0 0 0 0 transparent; }
+
+.ui.grid > .column:not(.row) {
+  padding-bottom: 0; }

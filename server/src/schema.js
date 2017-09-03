@@ -12,6 +12,24 @@ input SkillInput {
     value: Int
 }
 
+type DMComment {
+    id: ID
+    author: ID
+    text: String
+    postedOn: String
+}
+
+type DMConversation {
+    id: ID
+    partner: ID
+    comments: [DMComment]
+}
+
+input DMInput {
+    partner: ID
+    text: String
+}
+
 type User {
     id: ID
     username: String
@@ -23,6 +41,7 @@ type User {
     city: String
     bio: String
     skills: [Skill]
+    dms: [DMConversation]
     createdOn: String
     fbId: String
     jwt: String
@@ -53,11 +72,12 @@ type Query {
 type Mutation {
     addUser(user: UserInput!): User
     addUserProfile(input: ProfileInput!): User
+    addDMComment(input: DMInput!): DMConversation 
 }
 
 type Subscription {
-    userSignedUp(id: String!): User
     userAddedUserProfile: User
+    userAddDMComment(convId: ID): DMConversation
 }
 
 schema {

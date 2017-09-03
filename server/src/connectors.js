@@ -10,6 +10,7 @@ const callback = (err) => {
 }
 mongoose.connect(URI, options, callback);
 mongoose.Promise = global.Promise;
+mongoose.set('debug', true);
 
 const User = mongoose.model("Users", UserSchema);
 
