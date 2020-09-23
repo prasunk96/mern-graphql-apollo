@@ -18,7 +18,7 @@
     "express": "^4.15.4",
     "graphql": "^0.10.5",
     "jsonwebtoken": "^7.4.3",
-    "mongoose": "^4.11.7",
+    "mongoose": "^5.7.5",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "subscriptions-transport-ws": "^0.8.2"
