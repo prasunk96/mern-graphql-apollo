@@ -10,7 +10,7 @@
   "author": "benjaminadk",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^1.1.0",
+    "apollo-server-express": "^2.14.2",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
